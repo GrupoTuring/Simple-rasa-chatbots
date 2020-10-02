@@ -61,6 +61,8 @@ def one_entity_add(phrases, subs, ent, train_dict):
                     text_with_term = phrase.format(term)
                     start = text_with_term.find(term)
                     end = start + len(term)
+                    if ent == "price":
+                        ent = label
                     entities = [{"start": start, "end": end, "value": label, "entity": ent}]
                     example = {"intent": "find_restaurant", "entities": entities, "text": text_with_term}
                     train_dict["rasa_nlu_data"]["common_examples"].append(example)
@@ -69,6 +71,8 @@ def one_entity_add(phrases, subs, ent, train_dict):
                 text_with_term = phrase.format(term)
                 start = text_with_term.find(term)
                 end = start + len(term)
+                if ent == "price":
+                    ent = label
                 entities = [{"start": start, "end": end, "value": label, "entity": ent}]
                 example = {"intent": "find_restaurant", "entities": entities, "text": text_with_term}
                 train_dict["rasa_nlu_data"]["common_examples"].append(example)
@@ -85,6 +89,8 @@ def two_entity_add(phrases, subs1, ent1, subs2, ent2, train_dict):
                     end1 = start1 + len(term_1)
                     start2= text_with_term.find(term_2)
                     end2= start2 + len(term_2)
+                    ent1 = label1
+                    print(ent1)
                     entities = [{"start": start1, "end": end1, "value": label1, "entity": ent1},
                                        {"start": start2, "end": end2, "value": label2, "entity": ent2}]
                     example = {"intent": "find_restaurant", "entities": entities, "text": text_with_term}
@@ -105,6 +111,10 @@ for phrases, subs, ent in one_entity_combinations:
 for phrases, subs1, ent1, subs2, ent2 in two_entity_combinations:
     train_dict = two_entity_add(phrases, subs1, ent1, subs2, ent2, train_dict)
 
+genraL_find_restaurant_intetion = ('find_restaurant', ["Find me a place to eat!", "I wanna go out for dinner",
+                                "I wanna eat out", "Are there any good places to eat out here?", "I wanna go to a restaurant",
+                                "Please find me a restaurant", "I wanna go to a restaurant with some friends today",
+                                "I want to eat alone at a restaurant"])
 greet_intetion = ('greet', ['Olá', 'Oi', 'Tudo bom?', 'Tranquilo?', "Eai", "De boa?", "Fala!", "Boa tarde", 
                   "Boa noite", "Bom dia", "Oie", "Ois"])
 thankyou_intention = ('thankyou', ['Vlw', "Boa", "Obrigada", "Obrigado", "Valeu!", "Brigada", "Brigado"])
